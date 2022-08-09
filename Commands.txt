@@ -1,0 +1,3 @@
+ng test --no-watch --code-coverage   ->     checks the test coverage.
+npm i karma-mocha-reporter --save-dev
+
