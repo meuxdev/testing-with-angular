@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@picocss/pico": "^1.5.3",
     "puppeteer": "^16.1.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
