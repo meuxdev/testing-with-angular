@@ -1,6 +1,6 @@
 import { ValueService } from './value.service';
 
-fdescribe('ValueService', () => {
+describe('ValueService', () => {
   let service: ValueService;
   let expectedDefaultValue: string = 'my val';
 
