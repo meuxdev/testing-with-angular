@@ -1,3 +1,14 @@
 <section class="container">
   <h1>Products Component</h1>
+  <div class="my-grid">
+    <figure *ngFor="let product of products">
+      <img
+        src="https://picsum.photos/seed/picsum/200/300"
+        [alt]="product.title"
+      />
+      <figcaption>
+        {{ product.title }} - {{ product.price | currency }}
+      </figcaption>
+    </figure>
+  </div>
 </section>
