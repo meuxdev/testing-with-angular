@@ -1,36 +1,47 @@
 import { TestBed } from '@angular/core/testing';
-
 import { MasterService } from './master.service';
 import { ValueService } from './value.service';
 
 describe('MasterService', () => {
-  let service: MasterService;
+  let masterService: MasterService;
+  let valueServiceSpy: jasmine.SpyObj<ValueService>;
 
-  beforeEach(() => {});
+  beforeEach(() => {
+    const spy = jasmine.createSpyObj('Value Service', ['getValue']);
+    TestBed.configureTestingModule({
+      providers: [MasterService, { provide: ValueService, useValue: spy }],
+    });
+    masterService = TestBed.inject(MasterService);
+    valueServiceSpy = TestBed.inject(
+      ValueService
+    ) as jasmine.SpyObj<ValueService>;
+
+    valueServiceSpy.getValue.and.returnValue('my val');
+  });
+
+  it('should be create', () => {
+    expect(masterService).toBeTruthy();
+  });
 
   it('should return "my val" from real service', () => {
-    const valueService = new ValueService();
-    const service = new MasterService(valueService);
-    expect(service.getValue()).toBe('MY VAL');
+    expect(masterService.getValue()).toBe('MY VAL');
   });
 
-  it('should return "FAKE VAL" from obj', () => {
-    const fake = { getValue: () => 'fake val' };
-    const service = new MasterService(fake as ValueService);
-    expect(service.getValue()).toBe('FAKE VAL');
-  });
+  // it('should return "FAKE VAL" from obj', () => {
+  //   const fake = { getValue: () => 'fake val' };
+  //   const service = new MasterService(fake as ValueService);
+  //   expect(service.getValue()).toBe('FAKE VAL');
+  // });
 
   it('should call get value from the value services once', () => {
     // Arrange
-    const valueService = jasmine.createSpyObj('ValueService', ['getValue']);
-    valueService.getValue.and.returnValue('fAkE VaL'.toUpperCase());
-    const service = new MasterService(valueService);
+    valueServiceSpy.getValue.and.returnValue('fAkE VaL'.toUpperCase());
 
     // Act
-    const value = service.getValue();
+    const value = masterService.getValue();
 
     // Assert
     expect(value).toBe('FAKE VAL');
-    expect(valueService.getValue).toHaveBeenCalledTimes(1);
+    expect(valueServiceSpy.getValue).toHaveBeenCalledTimes(1);
   });
 });
