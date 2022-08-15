@@ -49,5 +49,21 @@ fdescribe('ValueService', () => {
     });
   });
 
-  describe('Test for observable value', () => {});
+  describe('Test for observable value', () => {
+    it("Should Return 'observable value' for the observable", () => {
+      // Arrang
+      let value = '';
+      const defaultValue = 'observable value';
+
+      // Act
+      service.getObservablePromise().subscribe({
+        next: (_value) => {
+          value = _value;
+        },
+      });
+
+      // Assert
+      expect(value).toBe(defaultValue);
+    });
+  });
 });
